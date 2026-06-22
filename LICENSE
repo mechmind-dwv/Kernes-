@@ -1,1 +1,104 @@
+================================================================================
+KERNES - LICENCIAS DEL PROYECTO
+================================================================================
+
+Este proyecto utiliza un modelo de licenciamiento dual según el componente:
+
+--------------------------------------------------------------------------------
+1. SERVIDOR Y APIs (AGPL-3.0)
+--------------------------------------------------------------------------------
+
+    services/api-gateway/
+    packages/dids/
+    packages/zk/
+    packages/fhe/
+    contracts/
+
+    Licenciado bajo: GNU Affero General Public License v3.0
+
+    Este programa es software libre: puedes redistribuirlo y/o modificarlo
+    bajo los terminos de la GNU Affero General Public License publicada por
+    la Free Software Foundation, ya sea la version 3 de la Licencia, o
+    (a tu eleccion) cualquier version posterior.
+
+    Este programa se distribuye con la esperanza de que sea util,
+    pero SIN NINGUNA GARANTIA; sin siquiera la garantia implicita de
+    COMERCIABILIDAD o IDONEIDAD PARA UN PROPOSITO PARTICULAR.
+    Consulta la GNU Affero General Public License para mas detalles.
+
+    Deberias haber recibido una copia de la GNU Affero General Public License
+    junto con este programa. Si no, consulta <https://www.gnu.org/licenses/>.
+
+--------------------------------------------------------------------------------
+2. EXTENSIONES, APPS Y FRONTEND (GPL-3.0)
+--------------------------------------------------------------------------------
+
+    apps/extension/
+    apps/web/
+    apps/mobile/
+    packages/ui/
+    packages/crypto/
+    packages/sentinel-core/
+    packages/chaff-engine/
+    packages/lexai-core/
+    packages/shared-types/
+
+    Licenciado bajo: GNU General Public License v3.0
+
+    Este programa es software libre: puedes redistribuirlo y/o modificarlo
+    bajo los terminos de la GNU General Public License publicada por
+    la Free Software Foundation, ya sea la version 3 de la Licencia, o
+    (a tu eleccion) cualquier version posterior.
+
+    Este programa se distribuye con la esperanza de que sea util,
+    pero SIN NINGUNA GARANTIA; sin siquiera la garantia implicita de
+    COMERCIABILIDAD o IDONEIDAD PARA UN PROPOSITO PARTICULAR.
+    Consulta la GNU General Public License para mas detalles.
+
+    Deberias haber recibido una copia de la GNU General Public License
+    junto con este programa. Si no, consulta <https://www.gnu.org/licenses/>.
+
+--------------------------------------------------------------------------------
+3. DOCUMENTACION (CC BY-SA 4.0)
+--------------------------------------------------------------------------------
+
+    README.md
+    Todo.md
+    Manual-Developer.md
+    docs/
+
+    Licenciado bajo: Creative Commons Attribution-ShareAlike 4.0 International
+
+    Eres libre de:
+        Compartir — copiar y redistribuir el material en cualquier medio o formato
+        Adaptar — remezclar, transformar y construir a partir del material
+
+    Bajo los siguientes terminos:
+        Atribucion — Debes dar credito de manera adecuada
+        CompartirIgual — Si remezclas, debes distribuir tu contribucion bajo
+                         la misma licencia del original
+
+    Ver licencia completa en: <https://creativecommons.org/licenses/by-sa/4.0/>
+
+--------------------------------------------------------------------------------
+4. EXENCION DE RESPONSABILIDAD
+--------------------------------------------------------------------------------
+
+Este software se proporciona "tal cual", sin garantia de ningun tipo, expresa
+o implicita, incluyendo pero no limitado a garantias de comerciabilidad,
+idoneidad para un proposito particular y no infraccion.
+
+En ningun caso los autores o titulares del copyright seran responsables de
+ninguna reclamacion, dano u otra responsabilidad, ya sea en una accion de
+contrato, agravio o de otro tipo, que surja de, fuera de o en conexion con
+el software o el uso u otros tratos en el software.
+
+El uso de este software para fines ilegales es responsabilidad exclusiva del
+usuario final. Los autores no promueven ni respaldan el uso indebido de las
+herramientas de privacidad para evadir la ley.
+
+================================================================================
+Copyright (c) 2026 Kernes Contributors
+================================================================================
+
 #

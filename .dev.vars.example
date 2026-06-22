@@ -1,9 +1,39 @@
-# Cloudflare (solo producción, dejar vacío en dev)
-CLOUDFLARE_API_TOKEN=
-CLOUDFLARE_ACCOUNT_ID=
+# ============================================================================
+# Kernes - Variables de Desarrollo (API Gateway)
+# ============================================================================
+# Copia este archivo a .dev.vars y rellena tus valores
+# NUNCA commitees el archivo .dev.vars
+# ============================================================================
 
-# Servicios externos
-HIBP_API_KEY=tu-api-key-de-haveibeenpwned
+# ---------------------------------------------------------------------------
+# Cloudflare (solo para deploy a producción)
+# ---------------------------------------------------------------------------
+# Token de API de Cloudflare (obtenlo desde dash.cloudflare.com)
+CLOUDFLARE_API_TOKEN=tu-token-de-cloudflare
 
-# Monitoreo (opcional)
-SENTRY_DSN=
+# ID de cuenta de Cloudflare
+CLOUDFLARE_ACCOUNT_ID=tu-account-id
+
+# ---------------------------------------------------------------------------
+# Servicios Externos
+# ---------------------------------------------------------------------------
+# API Key de Have I Been Pwned (obtenla gratis en haveibeenpwned.com/API/Key)
+HIBP_API_KEY=tu-api-key-de-hibp
+
+# ---------------------------------------------------------------------------
+# Ceramic Network
+# ---------------------------------------------------------------------------
+# Seed para el DID del servidor (solo para autenticación server-to-server)
+CERAMIC_SEED=tu-seed-de-ceramic
+
+# ---------------------------------------------------------------------------
+# Monitoreo (Opcional)
+# ---------------------------------------------------------------------------
+# DSN de Sentry para errores del servidor
+# SENTRY_DSN=https://xxxx@yyyy.ingest.sentry.io/zzzz
+
+# ---------------------------------------------------------------------------
+# Rate Limiting
+# ---------------------------------------------------------------------------
+# Requests por minuto por IP (desarrollo: alto, producción: estricto)
+RATE_LIMIT_PER_MINUTE=100
