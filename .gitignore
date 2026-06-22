@@ -92,3 +92,5 @@ public.json
 # ---------------------------------------------------------------------------
 android/app/build/
 ios/App/build/
+.env.local
+.dev.vars
