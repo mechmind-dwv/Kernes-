@@ -1,0 +1,48 @@
+{
+  "name": "kernes",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Infraestructura de codigo abierto para la contravigilancia digital y soberania de datos",
+  "author": "Kernes Contributors",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/tu-usuario/kernes#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tu-usuario/kernes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tu-usuario/kernes/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "build": "turbo run build",
+    "build:packages": "turbo run build --filter=./packages/*",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "check:all": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules .turbo",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "husky": "^9.0.0",
+    "prettier": "^3.2.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "services/*"
+  ]
+}
