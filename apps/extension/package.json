@@ -15,7 +15,6 @@
     "@kernes/crypto": "workspace:*",
     "@kernes/sentinel-core": "workspace:*",
     "@kernes/shared-types": "workspace:*",
-    "@kernes/ui": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "zustand": "^5.0.0"
