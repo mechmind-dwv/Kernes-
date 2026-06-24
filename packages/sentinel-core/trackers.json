@@ -1,0 +1,64 @@
+[
+  {
+    "name": "Palantir Gotham",
+    "domain": "palantir.com",
+    "category": "surveillance",
+    "description": "Plataforma de integración y análisis de datos masivos",
+    "severity": "critical",
+    "parentCompany": "Palantir Technologies"
+  },
+  {
+    "name": "Palantir Foundry",
+    "domain": "palantirfoundry.com",
+    "category": "surveillance",
+    "description": "Plataforma corporativa de análisis de datos",
+    "severity": "critical",
+    "parentCompany": "Palantir Technologies"
+  },
+  {
+    "name": "Google Analytics",
+    "domain": "google-analytics.com",
+    "category": "analytics",
+    "description": "Servicio de análisis web de Google",
+    "severity": "high",
+    "parentCompany": "Google/Alphabet",
+    "alternatives": ["Plausible", "Fathom", "Matomo"]
+  },
+  {
+    "name": "Google DoubleClick",
+    "domain": "doubleclick.net",
+    "category": "advertising",
+    "description": "Red de publicidad display de Google",
+    "severity": "high",
+    "parentCompany": "Google/Alphabet"
+  },
+  {
+    "name": "Facebook Pixel",
+    "domain": "connect.facebook.net",
+    "category": "advertising",
+    "description": "Píxel de seguimiento de Meta/Facebook",
+    "severity": "high",
+    "parentCompany": "Meta Platforms"
+  },
+  {
+    "name": "FingerprintJS",
+    "domain": "fingerprintjs.com",
+    "category": "fingerprinting",
+    "description": "Librería de fingerprinting de navegador",
+    "severity": "critical"
+  },
+  {
+    "name": "Acxiom",
+    "domain": "acxiom.com",
+    "category": "data-broker",
+    "description": "Broker de datos personales masivos",
+    "severity": "critical"
+  },
+  {
+    "name": "LiveRamp",
+    "domain": "liveramp.com",
+    "category": "data-broker",
+    "description": "Plataforma de unificación de identidad",
+    "severity": "critical"
+  }
+]

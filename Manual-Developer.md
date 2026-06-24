@@ -1,11 +1,11 @@
-Manual del Developer — Kernes
+# Manual del Developer — Kernes
 
 > Guía técnica completa para contribuidores, mantenedores y auditores del proyecto.
-Versión: 1.0 | Fecha: 2026-05-23
+> Versión: 1.0 | Fecha: 2026-05-23
 
 ---
 
-Tabla de contenidos
+## Tabla de contenidos
 
 1. [Filosofía de desarrollo](#1-filosofía-de-desarrollo)
 2. [Estructura del monorepo](#2-estructura-del-monorepo)
@@ -23,29 +23,30 @@ Tabla de contenidos
 
 ---
 
-1. Filosofía de desarrollo
+## 1. Filosofía de desarrollo
 
-Principios fundamentales
+### Principios fundamentales
 
-1. Local-first: El procesamiento de datos sensibles ocurre SIEMPRE en el dispositivo del usuario. El servidor es un mero coordinador.
-2. Zero-trust por defecto: Asumimos que cualquier servidor puede ser comprometido. No envíes datos que no estés dispuesto a hacer públicos.
-3. Privacy by design: Cada nueva funcionalidad debe pasar la evaluación de impacto en privacidad antes de ser aceptada.
-4. Código abierto radical: Todo el código, la configuración de infraestructura y las decisiones de diseño son públicos y auditables.
-5. Usabilidad sin sacrificar seguridad: Una herramienta de privacidad que nadie usa es inútil. Buscamos el equilibrio entre protección y facilidad de uso.
+1. **Local-first:** El procesamiento de datos sensibles ocurre SIEMPRE en el dispositivo del usuario. El servidor es un mero coordinador.
+2. **Zero-trust por defecto:** Asumimos que cualquier servidor puede ser comprometido. No envíes datos que no estés dispuesto a hacer públicos.
+3. **Privacy by design:** Cada nueva funcionalidad debe pasar la evaluación de impacto en privacidad antes de ser aceptada.
+4. **Código abierto radical:** Todo el código, la configuración de infraestructura y las decisiones de diseño son públicos y auditables.
+5. **Usabilidad sin sacrificar seguridad:** Una herramienta de privacidad que nadie usa es inútil. Buscamos el equilibrio entre protección y facilidad de uso.
 
-Decisiones de arquitectura clave
+### Decisiones de arquitectura clave
 
-Decisión	Justificación	
-React + TypeScript	Tipado seguro, ecosistema maduro, reutilización entre web/móvil/extensión	
-Hono.js en Cloudflare Workers	Edge computing, sin estado, privacidad de IP, cold-start cero	
-WebExtension Manifest V3	Compatibilidad moderna con Chrome y Firefox	
-Capacitor (no RN puro)	90% de código compartido, acceso a APIs nativas cuando se necesite	
-Procesamiento de NLP en cliente	Transformers.js via WebAssembly — datos nunca salen del navegador	
-IPFS para almacenamiento	Resistencia a censura, sin punto único de fallo	
+| Decisión | Justificación |
+|----------|--------------|
+| React + TypeScript | Tipado seguro, ecosistema maduro, reutilización entre web/móvil/extensión |
+| Hono.js en Cloudflare Workers | Edge computing, sin estado, privacidad de IP, cold-start cero |
+| WebExtension Manifest V3 | Compatibilidad moderna con Chrome y Firefox |
+| Capacitor (no RN puro) | 90% de código compartido, acceso a APIs nativas cuando se necesite |
+| Procesamiento de NLP en cliente | Transformers.js via WebAssembly — datos nunca salen del navegador |
+| IPFS para almacenamiento | Resistencia a censura, sin punto único de fallo |
 
 ---
 
-2. Estructura del monorepo
+## 2. Estructura del monorepo
 
 ```
 kernes/
@@ -124,27 +125,29 @@ kernes/
 
 ---
 
-3. Requisitos previos
+## 3. Requisitos previos
 
-Software necesario
+### Software necesario
 
-Herramienta	Versión mínima	Propósito	
-Node.js	20 LTS	Runtime JavaScript	
-pnpm	9.x	Gestor de paquetes y workspaces	
-Git	2.40+	Control de versiones	
-Rust	1.78+	WebAssembly builds (ZK circuits)	
-Circom	2.1.x	Compilación de circuitos ZK	
-Foundry	1.0+	Testing y deploy de smart contracts	
-Docker	24+	Entornos de desarrollo locales	
+| Herramienta | Versión mínima | Propósito |
+|-------------|---------------|-----------|
+| Node.js | 20 LTS | Runtime JavaScript |
+| pnpm | 9.x | Gestor de paquetes y workspaces |
+| Git | 2.40+ | Control de versiones |
+| Rust | 1.78+ | WebAssembly builds (ZK circuits) |
+| Circom | 2.1.x | Compilación de circuitos ZK |
+| Foundry | 1.0+ | Testing y deploy de smart contracts |
+| Docker | 24+ | Entornos de desarrollo locales |
 
-Opcionales pero recomendados
+### Opcionales pero recomendados
 
-Herramienta	Propósito	
-wrangler CLI	Despliegue de Cloudflare Workers	
-cargo-generate	Templates de Rust/WASM	
-Ollama	Ejecución local de modelos NLP en desarrollo	
+| Herramienta | Propósito |
+|-------------|-----------|
+| wrangler CLI | Despliegue de Cloudflare Workers |
+| cargo-generate | Templates de Rust/WASM |
+| Ollama | Ejecución local de modelos NLP en desarrollo |
 
-Verificación de entorno
+### Verificación de entorno
 
 ```bash
 # Verificar versiones
@@ -158,9 +161,9 @@ forge --version   # 1.0+
 
 ---
 
-4. Configuración del entorno
+## 4. Configuración del entorno
 
-4.1 Clonar y bootstrap
+### 4.1 Clonar y bootstrap
 
 ```bash
 # Clonar el repositorio
@@ -177,7 +180,7 @@ pnpm build:packages
 pnpm check:env
 ```
 
-4.2 Variables de entorno
+### 4.2 Variables de entorno
 
 Copia los archivos de ejemplo y rellena tus valores:
 
@@ -186,7 +189,7 @@ cp apps/web/.env.example apps/web/.env.local
 cp services/api-gateway/.dev.vars.example services/api-gateway/.dev.vars
 ```
 
-Archivo `.env.local` (web y extensión)
+#### Archivo `.env.local` (web y extensión)
 
 ```env
 # API
@@ -206,7 +209,7 @@ VITE_OLLAMA_URL=http://localhost:11434
 VITE_DEV_MODE=true
 ```
 
-Archivo `.dev.vars` (API Gateway)
+#### Archivo `.dev.vars` (API Gateway)
 
 ```env
 # Cloudflare (solo producción, dejar vacío en dev)
@@ -220,9 +223,9 @@ HIBP_API_KEY=tu-api-key-de-haveibeenpwned
 SENTRY_DSN=
 ```
 
-> IMPORTANTE: Nunca commitees archivos `.env` o `.dev.vars`. Están en `.gitignore` por defecto.
+> **IMPORTANTE:** Nunca commitees archivos `.env` o `.dev.vars`. Están en `.gitignore` por defecto.
 
-4.3 Instalación de hooks de Git
+### 4.3 Instalación de hooks de Git
 
 ```bash
 # Instalar hooks de pre-commit (lint + test rápidos)
@@ -232,7 +235,7 @@ pnpm prepare
 git commit --allow-empty -m "test: hooks instalados"
 ```
 
-4.4 Verificación final
+### 4.4 Verificación final
 
 ```bash
 # Ejecutar todos los checks
@@ -247,9 +250,9 @@ pnpm check:all
 
 ---
 
-5. Arquitectura técnica detallada
+## 5. Arquitectura técnica detallada
 
-5.1 Flujo de datos — Módulo Sentinel (Detección)
+### 5.1 Flujo de datos — Módulo Sentinel (Detección)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -282,7 +285,7 @@ pnpm check:all
 └─────────────────────────────────────────────────────────────┘
 ```
 
-5.2 Flujo de datos — Módulo Chaff (Ofuscación)
+### 5.2 Flujo de datos — Módulo Chaff (Ofuscación)
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -308,7 +311,7 @@ pnpm check:all
 └──────────────────────────────────────────────────────────────┘
 ```
 
-5.3 Flujo de datos — ZK-Proofs (SovereignVault)
+### 5.3 Flujo de datos — ZK-Proofs (SovereignVault)
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -338,7 +341,7 @@ pnpm check:all
 └──────────────────────────────────────────────────────────────┘
 ```
 
-5.4 Diagrama de componentes — API Gateway
+### 5.4 Diagrama de componentes — API Gateway
 
 ```
                     ┌─────────────────┐
@@ -364,11 +367,11 @@ pnpm check:all
 
 ---
 
-6. Desarrollo por módulo
+## 6. Desarrollo por módulo
 
-6.1 Extensión de navegador (`apps/extension`)
+### 6.1 Extensión de navegador (`apps/extension`)
 
-Estructura interna
+#### Estructura interna
 
 ```
 extension/src/
@@ -398,7 +401,7 @@ extension/src/
     └── messaging.ts          # Comunicación background/content/popup
 ```
 
-Comandos de desarrollo
+#### Comandos de desarrollo
 
 ```bash
 # Modo desarrollo con hot-reload (popup en localhost:3000)
@@ -415,19 +418,19 @@ pnpm --filter @kernes/extension lint
 pnpm --filter @kernes/extension format
 ```
 
-Cargar en modo desarrollador
+#### Cargar en modo desarrollador
 
-Chrome:
+**Chrome:**
 1. Abre `chrome://extensions/`
 2. Activa "Modo desarrollador"
 3. "Cargar descomprimida" → selecciona `apps/extension/dist/`
 
-Firefox:
+**Firefox:**
 1. Abre `about:debugging`
 2. "Este Firefox" → "Cargar complemento temporal"
 3. Selecciona `apps/extension/dist/manifest.json`
 
-Content Scripts — Puntos clave
+#### Content Scripts — Puntos clave
 
 Los content scripts se inyectan en todas las páginas web (con restricciones). Patrones importantes:
 
@@ -446,14 +449,14 @@ if (window.self === window.top) {
 }
 ```
 
-Restricciones de seguridad:
+**Restricciones de seguridad:**
 - Los content scripts no pueden acceder a variables JS de la página directamente
 - Usar `window.postMessage` para comunicación con scripts inyectados
 - Aislar el DOM del content script con Shadow DOM cuando sea posible
 
-6.2 Panel Web (`apps/web`)
+### 6.2 Panel Web (`apps/web`)
 
-Estructura
+#### Estructura
 
 ```
 web/src/
@@ -482,7 +485,7 @@ web/src/
     └── did-resolver.ts       # Resolución de DIDs
 ```
 
-Comandos
+#### Comandos
 
 ```bash
 # Desarrollo local (Vite dev server)
@@ -498,11 +501,11 @@ pnpm --filter @kernes/web preview
 pnpm --filter @kernes/web test
 ```
 
-Integración con la extensión
+#### Integración con la extensión
 
 El panel web y la extensión comparten estado a través de:
-1. IndexedDB (misma base de datos, acceso compartido)
-2. Mensajes (`chrome.runtime.sendMessage` / `browser.runtime.sendMessage`)
+1. **IndexedDB** (misma base de datos, acceso compartido)
+2. **Mensajes** (`chrome.runtime.sendMessage` / `browser.runtime.sendMessage`)
 
 ```typescript
 // Ejemplo: Leer datos de Sentinel desde el panel web
@@ -522,21 +525,22 @@ function Dashboard() {
 }
 ```
 
-6.3 API Gateway (`services/api-gateway`)
+### 6.3 API Gateway (`services/api-gateway`)
 
-Endpoints principales
+#### Endpoints principales
 
-Método	Endpoint	Descripción	Auth	
-GET	`/health`	Health check	No	
-POST	`/auth/challenge`	Obtener challenge para auth DID	No	
-POST	`/auth/verify`	Verificar firma y obtener JWT	No	
-GET	`/trackers`	Lista de trackers conocidos	No	
-POST	`/sentinel/scan`	Iniciar escaneo remoto (solo para verificación adicional)	JWT	
-POST	`/lexai/parse`	Analizar política de privacidad (fallback si NLP local falla)	JWT	
-POST	`/lexai/draft`	Generar borrador de solicitud legal	JWT	
-GET	`/ceramic/*`	Proxy a Ceramic Network	JWT	
+| Método | Endpoint | Descripción | Auth |
+|--------|----------|-------------|------|
+| GET | `/health` | Health check | No |
+| POST | `/auth/challenge` | Obtener challenge para auth DID | No |
+| POST | `/auth/verify` | Verificar firma y obtener JWT | No |
+| GET | `/trackers` | Lista de trackers conocidos | No |
+| POST | `/sentinel/scan` | Iniciar escaneo remoto (solo para verificación adicional) | JWT |
+| POST | `/lexai/parse` | Analizar política de privacidad (fallback si NLP local falla) | JWT |
+| POST | `/lexai/draft` | Generar borrador de solicitud legal | JWT |
+| GET | `/ceramic/*` | Proxy a Ceramic Network | JWT |
 
-Desarrollo local
+#### Desarrollo local
 
 ```bash
 # Instalar wrangler globalmente si no lo tienes
@@ -551,7 +555,7 @@ pnpm --filter @kernes/api-gateway dev
 # El servidor estará en http://localhost:8787
 ```
 
-Deploy a producción
+#### Deploy a producción
 
 ```bash
 # Deploy a Cloudflare Workers
@@ -560,9 +564,9 @@ pnpm --filter @kernes/api-gateway deploy
 # El deploy usa wrangler.toml para configuración
 ```
 
-6.4 Smart Contracts (`contracts/`)
+### 6.4 Smart Contracts (`contracts/`)
 
-Estructura
+#### Estructura
 
 ```
 contracts/
@@ -580,7 +584,7 @@ contracts/
 └── foundry.toml
 ```
 
-Comandos
+#### Comandos
 
 ```bash
 # Compilar contratos
@@ -596,9 +600,9 @@ pnpm --filter @kernes/contracts deploy:testnet
 pnpm --filter @kernes/contracts verify
 ```
 
-6.5 Circuitos ZK (`circuits/`)
+### 6.5 Circuitos ZK (`circuits/`)
 
-Compilación y setup
+#### Compilación y setup
 
 ```bash
 # Compilar circuito
@@ -616,9 +620,9 @@ pnpm --filter @kernes/zk test
 
 ---
 
-7. Estándares de código
+## 7. Estándares de código
 
-7.1 TypeScript
+### 7.1 TypeScript
 
 Configuración base en `tsconfig.base.json`:
 
@@ -644,19 +648,19 @@ Configuración base en `tsconfig.base.json`:
 }
 ```
 
-7.2 Estilo de código (ESLint + Prettier)
+### 7.2 Estilo de código (ESLint + Prettier)
 
 Configuración compartida en `packages/eslint-config/` y `packages/prettier-config/`.
 
-Reglas clave
+#### Reglas clave
 
-- Indentación: 2 espacios (no tabs)
-- Comillas: simples para strings, dobles para JSX
-- Punto y coma: siempre
-- Longitud máxima de línea: 100 caracteres
-- Imports: ordenados (externos → internos → relativos)
+- **Indentación:** 2 espacios (no tabs)
+- **Comillas:** simples para strings, dobles para JSX
+- **Punto y coma:** siempre
+- **Longitud máxima de línea:** 100 caracteres
+- **Imports:** ordenados (externos → internos → relativos)
 
-Ejemplo
+#### Ejemplo
 
 ```typescript
 // ✅ Correcto
@@ -703,7 +707,7 @@ function Dashboard(props) {
 }
 ```
 
-7.3 Commits (Conventional Commits)
+### 7.3 Commits (Conventional Commits)
 
 ```
 <tipo>(<alcance>): <descripción>
@@ -713,25 +717,26 @@ function Dashboard(props) {
 [pie opcional]
 ```
 
-Tipos permitidos
+#### Tipos permitidos
 
-Tipo	Uso	
-`feat`	Nueva funcionalidad	
-`fix`	Corrección de bug	
-`docs`	Cambios en documentación	
-`style`	Cambios de formato (espacios, comas)	
-`refactor`	Refactorización de código	
-`perf`	Mejora de rendimiento	
-`test`	Añadir o corregir tests	
-`chore`	Tareas de mantenimiento	
-`security`	Fix de seguridad	
-`privacy`	Mejora relacionada con privacidad	
+| Tipo | Uso |
+|------|-----|
+| `feat` | Nueva funcionalidad |
+| `fix` | Corrección de bug |
+| `docs` | Cambios en documentación |
+| `style` | Cambios de formato (espacios, comas) |
+| `refactor` | Refactorización de código |
+| `perf` | Mejora de rendimiento |
+| `test` | Añadir o corregir tests |
+| `chore` | Tareas de mantenimiento |
+| `security` | Fix de seguridad |
+| `privacy` | Mejora relacionada con privacidad |
 
-Alcances comunes
+#### Alcances comunes
 
 `sentinel`, `chaff`, `lexai`, `sovereign`, `crypto`, `ui`, `extension`, `web`, `mobile`, `api`, `contracts`
 
-Ejemplos
+#### Ejemplos
 
 ```
 feat(sentinel): añadir detector de canvas fingerprinting
@@ -745,19 +750,20 @@ privacy(lexai): ejecutar parser de políticas localmente en vez de API
 
 ---
 
-8. Testing
+## 8. Testing
 
-8.1 Estrategia de testing
+### 8.1 Estrategia de testing
 
-Tipo	Herramienta	Cobertura objetivo	
-Unit tests	Vitest	80%+ de lógica de negocio	
-Integration tests	Vitest + MSW	Flujos entre componentes	
-E2E (web)	Playwright	Caminos críticos de usuario	
-E2E (extensión)	Puppeteer + extensión cargada	Flujos de extensión	
-Smart contracts	Foundry	100% de branches	
-Circuitos ZK	Circom tester	Todos los circuitos	
+| Tipo | Herramienta | Cobertura objetivo |
+|------|-------------|-------------------|
+| Unit tests | Vitest | 80%+ de lógica de negocio |
+| Integration tests | Vitest + MSW | Flujos entre componentes |
+| E2E (web) | Playwright | Caminos críticos de usuario |
+| E2E (extensión) | Puppeteer + extensión cargada | Flujos de extensión |
+| Smart contracts | Foundry | 100% de branches |
+| Circuitos ZK | Circom tester | Todos los circuitos |
 
-8.2 Ejecutar tests
+### 8.2 Ejecutar tests
 
 ```bash
 # Todos los tests
@@ -780,7 +786,7 @@ pnpm --filter @kernes/contracts test
 pnpm --filter @kernes/zk test
 ```
 
-8.3 Mock de APIs externas
+### 8.3 Mock de APIs externas
 
 Usamos MSW (Mock Service Worker) para tests:
 
@@ -803,36 +809,37 @@ export const handlers = [
 
 ---
 
-9. Seguridad y procesamiento de datos
+## 9. Seguridad y procesamiento de datos
 
-9.1 Principios de procesamiento de datos
+### 9.1 Principios de procesamiento de datos
 
-Regla de oro: Kernes nunca procesa datos personales en servidores centralizados.
+**Regla de oro:** Kernes nunca procesa datos personales en servidores centralizados.
 
-Dato	Dónde se procesa	Cómo se almacena	
-Historial de navegación	Extensión (local)	IndexedDB cifrada (clave local)	
-Resultados de escaneo	Extensión (local)	IndexedDB cifrada	
-Credenciales DID	Navegador/móvil	localStorage/Keychain (clave del SO)	
-ZK-Proofs	Navegador (WASM)	No se almacenan (generación on-demand)	
-Solicitudes legales	Navegador (local)	IndexedDB cifrada	
-Políticas de privacidad parseadas	Navegador (Transformers.js)	Solo resultado del análisis	
+| Dato | Dónde se procesa | Cómo se almacena |
+|------|-----------------|-----------------|
+| Historial de navegación | Extensión (local) | IndexedDB cifrada (clave local) |
+| Resultados de escaneo | Extensión (local) | IndexedDB cifrada |
+| Credenciales DID | Navegador/móvil | localStorage/Keychain (clave del SO) |
+| ZK-Proofs | Navegador (WASM) | No se almacenan (generación on-demand) |
+| Solicitudes legales | Navegador (local) | IndexedDB cifrada |
+| Políticas de privacidad parseadas | Navegador (Transformers.js) | Solo resultado del análisis |
 
-9.2 Checklist de seguridad para nuevas funcionalidades
+### 9.2 Checklist de seguridad para nuevas funcionalidades
 
 Antes de mergear cualquier PR, verificar:
 
-- ¿Se procesan datos personales en el servidor? Si es sí → RECHAZAR
-- ¿Se envían datos a terceros sin consentimiento explícito?
-- ¿Los datos locales están cifrados con clave del usuario?
-- ¿Se generan logs que puedan contener PII?
-- ¿La funcionalidad tiene tests de seguridad?
-- ¿Se actualizó la documentación de privacidad?
+- [ ] ¿Se procesan datos personales en el servidor? Si es sí → RECHAZAR
+- [ ] ¿Se envían datos a terceros sin consentimiento explícito?
+- [ ] ¿Los datos locales están cifrados con clave del usuario?
+- [ ] ¿Se generan logs que puedan contener PII?
+- [ ] ¿La funcionalidad tiene tests de seguridad?
+- [ ] ¿Se actualizó la documentación de privacidad?
 
-9.3 Reporte de vulnerabilidades
+### 9.3 Reporte de vulnerabilidades
 
 Si descubres una vulnerabilidad de seguridad:
 
-1. NO abras un issue público
+1. **NO abras un issue público**
 2. Envía un email a: `security@kernes.org`
 3. Incluye:
    - Descripción detallada
@@ -844,9 +851,9 @@ Si descubres una vulnerabilidad de seguridad:
 
 ---
 
-10. CI/CD y releases
+## 10. CI/CD y releases
 
-10.1 Pipeline de CI (GitHub Actions)
+### 10.1 Pipeline de CI (GitHub Actions)
 
 ```yaml
 # .github/workflows/ci.yml
@@ -898,7 +905,7 @@ jobs:
       - run: better-npm-audit audit
 ```
 
-10.2 Releases
+### 10.2 Releases
 
 Los releases siguen [Semantic Versioning](https://semver.org/):
 
@@ -910,7 +917,7 @@ MINOR: Nuevas funcionalidades, compatibles hacia atrás
 PATCH: Fixes de bugs y mejoras de seguridad
 ```
 
-Proceso de release
+#### Proceso de release
 
 ```bash
 # 1. Asegurar que main está limpio
@@ -931,7 +938,7 @@ pnpm version minor  # o major / patch
 #    - Publica el release en GitHub con changelog
 ```
 
-Firma de releases
+#### Firma de releases
 
 Todos los artefactos de release están firmados criptográficamente:
 
@@ -947,53 +954,52 @@ minisign -Vm kernes-extension-v1.2.3.zip -p kernes-release.pub
 
 ---
 
-11. Contribución
+## 11. Contribución
 
-11.1 Cómo contribuir
+### 11.1 Cómo contribuir
 
-1. Lee el código de conducta: `./CODE_OF_CONDUCT.md`
-2. Busca issues existentes o abre uno nuevo para discutir tu contribución
-3. Fork y branch: Crea una rama desde `develop`:
-   
-```bash
+1. **Lee el código de conducta:** `./CODE_OF_CONDUCT.md`
+2. **Busca issues existentes** o abre uno nuevo para discutir tu contribución
+3. **Fork y branch:** Crea una rama desde `develop`:
+   ```bash
    git checkout develop
    git pull origin develop
    git checkout -b feat/tu-funcionalidad
    ```
-
-4. Desarrolla: Sigue los estándares de código y añade tests
-5. Commit: Usa [Conventional Commits](#73-commits-conventional-commits)
-6. Push y PR: Abre un Pull Request a `develop` con:
+4. **Desarrolla:** Sigue los estándares de código y añade tests
+5. **Commit:** Usa [Conventional Commits](#73-commits-conventional-commits)
+6. **Push y PR:** Abre un Pull Request a `develop` con:
    - Descripción clara del cambio
    - Referencia a issues relacionados
    - Screenshots si hay cambios visuales
    - Checklist de seguridad completado
 
-11.2 Requisitos de PR
+### 11.2 Requisitos de PR
 
-- Tests añadidos o actualizados
-- Documentación actualizada
-- `pnpm check:all` pasa sin errores
-- Evaluación de impacto en privacidad completada
-- Al menos 1 revisión de código aprobada
-- Para cambios criptográficos: revisión de 2 mantenedores de seguridad
+- [ ] Tests añadidos o actualizados
+- [ ] Documentación actualizada
+- [ ] `pnpm check:all` pasa sin errores
+- [ ] Evaluación de impacto en privacidad completada
+- [ ] Al menos 1 revisión de código aprobada
+- [ ] Para cambios criptográficos: revisión de 2 mantenedores de seguridad
 
-11.3 Áreas donde necesitamos ayuda
+### 11.3 Áreas donde necesitamos ayuda
 
-Área	Nivel	Descripción	
-Criptografía (ZK/FHE)	Avanzado	Optimización de circuitos, WASM	
-NLP local	Avanzado	Fine-tuning de modelos para análisis legal	
-Extensiones de navegador	Intermedio	Manifest V3, content scripts	
-UI/UX	Intermedio	Componentes accesibles, diseño inclusivo	
-Documentación	Todos	Traducciones, tutoriales, guías	
-Testing	Todos	Tests unitarios, E2E, seguridad	
-Traducciones	Todos	I18n de interfaz y documentación	
+| Área | Nivel | Descripción |
+|------|-------|-------------|
+| Criptografía (ZK/FHE) | Avanzado | Optimización de circuitos, WASM |
+| NLP local | Avanzado | Fine-tuning de modelos para análisis legal |
+| Extensiones de navegador | Intermedio | Manifest V3, content scripts |
+| UI/UX | Intermedio | Componentes accesibles, diseño inclusivo |
+| Documentación | Todos | Traducciones, tutoriales, guías |
+| Testing | Todos | Tests unitarios, E2E, seguridad |
+| Traducciones | Todos | I18n de interfaz y documentación |
 
 ---
 
-12. Referencia de comandos
+## 12. Referencia de comandos
 
-Comandos globales (desde raíz)
+### Comandos globales (desde raíz)
 
 ```bash
 # Instalación y build
@@ -1021,7 +1027,7 @@ pnpm typecheck           # TypeScript check en todo el monorepo
 pnpm changeset           # Crear un changeset para release
 ```
 
-Comandos por workspace
+### Comandos por workspace
 
 ```bash
 # Sintaxis: pnpm --filter <workspace> <comando>
@@ -1053,7 +1059,7 @@ pnpm --filter @kernes/zk setup:age
 pnpm --filter @kernes/zk test
 ```
 
-Comandos de utilidad
+### Comandos de utilidad
 
 ```bash
 # Generar componente UI con shadcn
@@ -1073,66 +1079,66 @@ pnpm why <paquete>
 
 ---
 
-13. FAQ técnico
+## 13. FAQ técnico
 
-General
+### General
 
-P: ¿Por qué PNPM en vez de npm o yarn?
+**P: ¿Por qué PNPM en vez de npm o yarn?**
 R: PNPM tiene mejor manejo de monorepos (workspaces nativo), ahorro de disco (hard links) y es más rápido. Su lockfile también es más determinista.
 
-P: ¿Por qué Turborepo?
+**P: ¿Por qué Turborepo?**
 R: Cache inteligente de builds. Si no cambias un paquete, no se recompila. En CI acelera los builds 3-5x.
 
-P: ¿Puedo usar npm o yarn en mi fork?
+**P: ¿Puedo usar npm o yarn en mi fork?**
 R: Técnicamente sí, pero no damos soporte. La configuración de CI y scripts asume PNPM.
 
-Extensión
+### Extensión
 
-P: ¿Por qué Manifest V3 y no V2?
+**P: ¿Por qué Manifest V3 y no V2?**
 R: Chrome ya no acepta extensiones V2 en la Chrome Web Store. Aunque V3 tiene limitaciones (service workers en vez de background pages), es el estándar actual.
 
-P: ¿La extensión funciona en Safari?
+**P: ¿La extensión funciona en Safari?**
 R: Safari requiere conversiones adicionales (WebExtension API parcialmente soportada). Es un objetivo para Fase 3.
 
-P: ¿Cómo debuggeo el service worker?
+**P: ¿Cómo debuggeo el service worker?**
 R: En Chrome: `chrome://extensions/` → "Fondo de página" en la tarjeta de Kernes → DevTools. El service worker se duerme tras 30s de inactividad; usa `chrome.runtime.connect()` para mantenerlo vivo durante debug.
 
-Criptografía
+### Criptografía
 
-P: ¿Por qué libsodium y no Web Crypto API nativa?
+**P: ¿Por qué libsodium y no Web Crypto API nativa?**
 R: libsodium proporciona una API más segura por diseño (evita errores comunes como nonces repetidos) y tiene mejor soporte para ed25519, x25519 y secretbox.
 
-P: ¿Los ZK-Proofs son lentos en móvil?
+**P: ¿Los ZK-Proofs son lentos en móvil?**
 R: Sí, la generación de proofs puede tardar 5-30 segundos en móvil dependiendo del circuito. Por eso son operaciones puntuales, no continuas. Estamos optimizando con WASM SIMD.
 
-P: ¿Qué pasa si pierdo mi DID?
+**P: ¿Qué pasa si pierdo mi DID?**
 R: Los DIDs se derivan de una seedphrase (BIP39). Al configurar Kernes por primera vez se te muestra una frase de recuperación de 12 palabras. Guárdala offline.
 
-Legal/Etica
+### Legal/Etica
 
-P: ¿Es legal usar Kernes?
+**P: ¿Es legal usar Kernes?**
 R: El software en sí es legal en la mayoría de jurisdicciones. Las funciones de ofuscación podrían violar Términos de Servicio de algunas plataformas. Kernes muestra advertencias claras y permite whitelistear sitios.
 
-P: ¿Puede usarse para actividades ilegales?
+**P: ¿Puede usarse para actividades ilegales?**
 R: Cualquier herramienta de privacidad puede usarse con fines buenos y malos. Kernes incluye un Código de Uso Aceptable y la ofuscación no está diseñada para evadir investigaciones legítimas con orden judicial.
 
-P: ¿Cómo reporto un uso indebido del código?
+**P: ¿Cómo reporto un uso indebido del código?**
 R: Envía un email a ethics@kernes.org. El Consejo de Ética revisará el caso.
 
-Contribución
+### Contribución
 
-P: ¿Necesito firmar un CLA (Contributor License Agreement)?
+**P: ¿Necesito firmar un CLA (Contributor License Agreement)?**
 R: No. Al contribuir aceptas que tu código se licencie bajo las mismas licencias del proyecto (AGPLv3/GPLv3). No requerimos asignación de copyright.
 
-P: ¿Puedo contribuir anónimamente?
+**P: ¿Puedo contribuir anónimamente?**
 R: Sí. Aceptamos contribuciones vía patches por email o pull requests desde cuentas anónimas. Los commits deben estar firmados con PGP.
 
-P: ¿Hay recompensas por encontrar bugs?
+**P: ¿Hay recompensas por encontrar bugs?**
 R: Sí. Tenemos un programa de bug bounty (ver /security/BUG-BOUNTY.md). Los pagos se hacen en XMR o BTC para preservar la privacidad del investigador.
 
 ---
 
-Recursos adicionales
+## Recursos adicionales
 
 - [Whitepaper técnico](https://docs.kernes.org/whitepaper)
 - [Documentación de APIs](https://docs.kernes.org/api)
@@ -1143,13 +1149,13 @@ Recursos adicionales
 
 ---
 
-Contacto del equipo de desarrollo
+## Contacto del equipo de desarrollo
 
-- Email técnico: dev@kernes.org
-- Chat: Matrix (#kernes-dev:matrix.org)
-- Foro: [forum.kernes.org/c/dev](https://forum.kernes.org/c/dev)
+- **Email técnico:** dev@kernes.org
+- **Chat:** Matrix (#kernes-dev:matrix.org)
+- **Foro:** [forum.kernes.org/c/dev](https://forum.kernes.org/c/dev)
 
 ---
 
-Este manual se actualiza con cada release. Última actualización: 2026-05-23
-Licencia: CC BY-SA 4.0
+*Este manual se actualiza con cada release. Última actualización: 2026-05-23*
+*Licencia: CC BY-SA 4.0*

@@ -1,0 +1,33 @@
+{
+  "name": "@kernes/extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx",
+    "lint:fix": "eslint src --ext ts,tsx --fix",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@kernes/crypto": "workspace:*",
+    "@kernes/sentinel-core": "workspace:*",
+    "@kernes/shared-types": "workspace:*",
+    "@kernes/ui": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "typescript": "^5.4.0",
+    "vite": "^6.0.0",
+    "vite-plugin-web-extension": "^4.0.0",
+    "vitest": "^2.0.0"
+  }
+}

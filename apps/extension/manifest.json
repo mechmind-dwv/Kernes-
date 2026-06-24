@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "Kernes — Contravigilancia Digital",
+  "short_name": "Kernes",
+  "version": "0.1.0",
+  "description": "Detecta trackers, ofusca tu perfil y recupera tu privacidad digital.",
+  "author": "Kernes Contributors",
+  "homepage_url": "https://kernes.org",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    },
+    "default_title": "Kernes — Estado de privacidad"
+  },
+  "background": {
+    "service_worker": "src/background/index.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/index.ts"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/injected/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "options_page": "src/options/index.html",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
