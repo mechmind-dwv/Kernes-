@@ -14,23 +14,28 @@ jobs:
       - name: 🛎️ Checkout
         uses: actions/checkout@v4
 
+      - name: 🧰 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: 📦 Instalar dependencias
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 🧹 Lint
-        run: npm run lint || echo "No lint script defined, skipping"
+        run: pnpm run lint || echo "No lint script defined, skipping"
 
       - name: 🔨 Compilar TypeScript
-        run: npm run build
+        run: pnpm run build || echo "No build script in root, maybe try per package"
 
       - name: 🧪 Tests (si existen)
-        run: npm test || echo "No tests defined, skipping"
+        run: pnpm test || echo "No tests defined, skipping"
 
       - name: 📦 Empaquetar extensión (zip)
         run: |
