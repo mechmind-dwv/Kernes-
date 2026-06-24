@@ -24,7 +24,7 @@
     "@types/chrome": "^0.0.268",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^4.3.0",
+    "@vitejs/plugin-react": "^6.0.3",
     "typescript": "^5.4.0",
     "vite": "^6.0.0",
     "vite-plugin-web-extension": "^4.0.0",
